@@ -1,0 +1,125 @@
+/*
+ * Optional base styles for sites without the Marketers Delight theme, which
+ * normally provides the form, spacing and card classes the block uses.
+ * Import once in your layout:
+ *
+ *   import "@gatilab/emdash-lead-capture/styles/standalone.css";
+ *
+ * Everything is scoped to .md-lead-capture and themable with --lc-* tokens.
+ */
+.md-lead-capture {
+	--lc-bg: var(--color-content-bg, #fff);
+	--lc-text: var(--color-text, #1f2937);
+	--lc-muted: var(--color-text-sec, #6b7280);
+	--lc-border: var(--color-border, #e5e7eb);
+	--lc-accent: var(--color-button, #2563eb);
+	--lc-accent-text: var(--color-button-text, #fff);
+	--lc-radius: var(--radius-m, 8px);
+	color: var(--lc-text);
+}
+
+.md-lead-capture.md-lead-capture-style-card {
+	background: var(--lc-bg);
+	border: 1px solid var(--lc-border);
+	border-radius: calc(var(--lc-radius) * 1.5);
+}
+
+.md-lead-capture.shadow {
+	box-shadow: 0 1px 2px rgb(0 0 0 / 0.05), 0 8px 24px rgb(0 0 0 / 0.06);
+}
+
+.md-lead-capture.block-half { padding: 1rem; }
+.md-lead-capture.block-single { padding: 1.5rem; }
+.md-lead-capture.block-double { padding: 2.5rem; }
+.md-lead-capture.mb-half { margin-block-end: 1rem; }
+.md-lead-capture.mb-mid { margin-block-end: 2rem; }
+.md-lead-capture.mb-double { margin-block-end: 3rem; }
+.md-lead-capture .mb-single { margin-block-end: 1.25rem; }
+.md-lead-capture .mb-half { margin-block-end: 0.5rem; }
+
+.md-lead-capture .email-form-title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.md-lead-capture .email-form-intro-desc p { margin: 0; }
+
+.md-lead-capture .screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.md-lead-capture .form-input {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	margin-block-end: 0.75rem;
+	padding: 0.75rem 0.875rem;
+	font: inherit;
+	color: inherit;
+	background: var(--lc-bg);
+	border: 2px solid var(--lc-border);
+	border-radius: var(--lc-radius);
+	appearance: none;
+}
+
+.md-lead-capture .form-input:focus-visible {
+	outline: none;
+	border-color: var(--lc-accent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--lc-accent) 25%, transparent);
+}
+
+.md-lead-capture .form-submit,
+.md-lead-capture .md-lead-capture-download .button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.875rem 1.5rem;
+	font: inherit;
+	font-weight: 600;
+	color: var(--lc-accent-text);
+	text-decoration: none;
+	background: var(--lc-accent);
+	border: 0;
+	border-radius: var(--lc-radius);
+	cursor: pointer;
+}
+
+.md-lead-capture .md-lead-capture-download .button { width: auto; }
+
+.md-lead-capture .form-submit:focus-visible,
+.md-lead-capture .md-lead-capture-download .button:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--lc-accent) 45%, transparent);
+	outline-offset: 2px;
+}
+
+.md-lead-capture .form-submit[disabled] { opacity: 0.7; cursor: progress; }
+
+.md-lead-capture .md-icon-loading { display: none; }
+
+.md-lead-capture .form-submit.is-loading .md-icon-loading {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	border: 2px solid currentColor;
+	border-right-color: transparent;
+	border-radius: 50%;
+	animation: lc-spin 0.7s linear infinite;
+}
+
+@keyframes lc-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+	.md-lead-capture .form-submit.is-loading .md-icon-loading { animation-duration: 2s; }
+}

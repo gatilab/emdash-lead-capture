@@ -1,0 +1,109 @@
+---
+/**
+ * Portable Text renderer for the `leadCapture` block, and the standalone
+ * component (`<LeadCapture node={{ _type: "leadCapture", … }} />`).
+ *
+ * Markup, classes and data attributes follow the WordPress template, so
+ * existing theme styles keep applying. The deliverable URL is not in the
+ * markup: `data-block-key` carries the block's sealed (encrypted) config.
+ */
+import "./lead-capture.css";
+
+import { formModel } from "../core/attrs.js";
+import { FORM_DEFAULTS } from "../core/defaults.js";
+import { autop, sanitizeInlineHtml } from "../core/text.js";
+import type { LeadCaptureBlock } from "../core/types.js";
+import { IMPRESSION_URL, nextFormId, sealBlock, SUBMIT_URL } from "./seal.js";
+
+interface Props {
+	node: LeadCaptureBlock;
+}
+
+const block = Astro.props.node;
+const m = formModel(block);
+const blockKey = await sealBlock(Astro, block);
+const formId = nextFormId(Astro.locals);
+const description = m.description ? autop(sanitizeInlineHtml(m.description)) : "";
+const redirectUrl = /^(https?:\/\/|\/(?!\/))/i.test(m.redirectUrl) ? m.redirectUrl : "";
+const formClass = `md-lead-capture-form email-form form-full clear${m.compact ? ` md-lead-capture-${m.style}` : ""}`;
+---
+
+<div
+	class={m.classes.join(" ")}
+	style={m.inlineStyle || undefined}
+	data-block-key={blockKey}
+	data-success-action={m.successAction}
+	data-redirect-url={redirectUrl}
+	data-success-message={m.successMessage}
+	data-submit-url={SUBMIT_URL}
+	data-impression-url={IMPRESSION_URL}
+>
+	{
+		(m.title || m.description) && (
+			<div class="email-form-inner mb-single">
+				{m.title && <div class="email-form-title med-title mb-half">{m.title}</div>}
+				{description && <div class="email-form-intro-desc" set:html={description} />}
+			</div>
+		)
+	}
+
+	<form id={formId} class={formClass} method="post" novalidate>
+		{
+			m.showName && (
+				<>
+					<label for={`${formId}-name`} class="screen-reader-text">{m.nameLabel}</label>
+					<input type="text" id={`${formId}-name`} name="name" class="form-input form-input-name" placeholder={m.nameLabel} required />
+				</>
+			)
+		}
+
+		<label for={`${formId}-email`} class="screen-reader-text">{m.emailLabel}</label>
+		<input type="email" id={`${formId}-email`} name="email" class="form-input form-input-email" placeholder={m.emailLabel} required autocomplete="email" />
+
+		{
+			/* Newsletter consent stays unticked until the visitor ticks it. */
+			m.showNewsletter && !m.compact && (
+				<p class="md-lead-capture-newsletter">
+					<input type="checkbox" id={`${formId}-newsletter`} name="newsletter_opt_in" value="1" />
+					<label for={`${formId}-newsletter`}>{m.newsletterLabel}</label>
+				</p>
+			)
+		}
+
+		<button type="submit" class={`email-form-submit form-submit button-loading${m.buttonClass ? ` ${m.buttonClass}` : ""}`} style={m.buttonStyle || undefined}>
+			{m.submitText}
+			<i class="md-icon md-icon-loading" aria-hidden="true"></i>
+		</button>
+
+		<div style="position:absolute;left:-9999px" aria-hidden="true">
+			<input type="text" name="website" tabindex="-1" autocomplete="off" />
+		</div>
+	</form>
+
+	{
+		/* Below the one-row form, so the input and button keep their seam. */
+		m.showNewsletter && m.compact && (
+			<p class="md-lead-capture-newsletter md-lead-capture-newsletter-compact">
+				<input type="checkbox" id={`${formId}-newsletter`} name="newsletter_opt_in" value="1" form={formId} />
+				<label for={`${formId}-newsletter`}>{m.newsletterLabel}</label>
+			</p>
+		)
+	}
+
+	<p id={`${formId}-error`} class="md-lead-capture-error" role="alert" hidden></p>
+
+	<div class="md-lead-capture-success" style="display:none" role="status" aria-live="polite">
+		<p class="md-lead-capture-success-msg"></p>
+		<p class="md-lead-capture-download" style="display:none">
+			<a class="button" href="#" download>{FORM_DEFAULTS.downloadNow}</a>
+		</p>
+		<p class="md-lead-capture-spam-note">{FORM_DEFAULTS.spamNote}</p>
+	</div>
+</div>
+
+<script>
+	import { initLeadCapture } from "./client";
+
+	initLeadCapture();
+	document.addEventListener("astro:page-load", () => initLeadCapture());
+</script>

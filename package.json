@@ -1,0 +1,76 @@
+{
+	"name": "@gatilab/emdash-lead-capture",
+	"version": "0.1.0",
+	"description": "Lead magnet block for EmDash: an email form that delivers a gated download through a tokenized link, with double opt-in, newsletter forwarding (Mailchimp, Kit, MailerLite, Brevo, Beehiiv, SendFox, Emailit), conversion stats and privacy tools. Port of the Marketers Delight Lead Capture drop-in.",
+	"type": "module",
+	"main": "./src/index.ts",
+	"types": "./src/index.ts",
+	"exports": {
+		".": "./src/index.ts",
+		"./core": "./src/core/index.ts",
+		"./astro": "./src/astro/index.ts",
+		"./site": "./src/site/index.ts",
+		"./site/middleware": "./src/site/middleware.ts",
+		"./admin": "./src/admin/index.tsx",
+		"./styles/lead-capture.css": "./src/astro/lead-capture.css",
+		"./styles/standalone.css": "./src/astro/standalone.css",
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"src",
+		"wordpress",
+		"README.md",
+		"CHANGELOG.md",
+		"LICENSE"
+	],
+	"sideEffects": [
+		"**/*.css",
+		"**/*.astro"
+	],
+	"keywords": [
+		"emdash",
+		"emdash-plugin",
+		"astro",
+		"lead-magnet",
+		"lead-capture",
+		"email-capture",
+		"double-opt-in",
+		"newsletter",
+		"mailchimp",
+		"kit",
+		"mailerlite",
+		"brevo"
+	],
+	"author": "Gatilab (https://gatilab.com)",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"typecheck": "tsc --noEmit && astro check --root . --tsconfig ./tsconfig.json",
+		"prepublishOnly": "pnpm typecheck && pnpm test"
+	},
+	"peerDependencies": {
+		"@cloudflare/kumo": "^2.6.0",
+		"@phosphor-icons/react": "^2.1.10",
+		"astro": "^7.0.0",
+		"emdash": "^1.1.0",
+		"react": ">=19.0.0"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
+		"@astrojs/react": "^6.0.5",
+		"@cloudflare/kumo": "2.6.0",
+		"@phosphor-icons/react": "^2.1.10",
+		"@types/node": "^24.0.0",
+		"@types/react": "^19.2.0",
+		"astro": "^7.3.2",
+		"emdash": "^1.1.0",
+		"react": "19.2.4",
+		"react-dom": "19.2.4",
+		"typescript": "^6.0.3",
+		"vitest": "4.1.10"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
