@@ -42,7 +42,7 @@
 		"brevo"
 	],
 	"author": "Gatilab (https://gatilab.com)",
-	"license": "GPL-2.0-or-later",
+	"license": "MIT",
 	"scripts": {
 		"test": "vitest run",
 		"test:watch": "vitest",

@@ -119,4 +119,4 @@ Post the file to the plugin's `import` admin route. Blocks need no conversion: t
 
 ## License
 
-GPL-2.0-or-later.
+MIT. See [LICENSE](./LICENSE).
