@@ -1,6 +1,6 @@
 {
 	"name": "@gatilab/emdash-lead-capture",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Lead magnet block for EmDash: an email form that delivers a gated download through a tokenized link, with double opt-in, newsletter forwarding (Mailchimp, Kit, MailerLite, Brevo, Beehiiv, SendFox, Emailit), conversion stats and privacy tools. Port of the Marketers Delight Lead Capture drop-in.",
 	"type": "module",
 	"main": "./src/index.ts",

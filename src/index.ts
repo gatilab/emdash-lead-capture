@@ -31,7 +31,7 @@ import { ensureCron, maintenance, publicRoutes } from "./server/routes.js";
 import { STORAGE } from "./server/storage.js";
 
 export const PLUGIN_ID = "lead-capture";
-export const PLUGIN_VERSION = "0.1.0";
+export const PLUGIN_VERSION = "0.1.1";
 export const PACKAGE_NAME = "@gatilab/emdash-lead-capture";
 
 export type LeadCaptureOptions = Record<string, never>;
